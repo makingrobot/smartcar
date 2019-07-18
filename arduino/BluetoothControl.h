@@ -12,6 +12,10 @@ class BluetoothControl : public RemoteControl
      
   protected:
     virtual void ReadInput();
+
+  private:
+    SerialWrapper mSerial;
+  
 };
 
 #endif

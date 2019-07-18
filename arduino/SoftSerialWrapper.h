@@ -4,6 +4,7 @@
 
 #include "Arduino.h"
 #include "SerialWrapper.h"
+#include <SoftwareSerial.h>
 
 class SoftSerialWrapper : public SerialWrapper
 {
@@ -15,6 +16,10 @@ class SoftSerialWrapper : public SerialWrapper
     virtual byte Read();
     virtual void Write(byte data);
     virtual void Println();
+
+  private:
+    SoftwareSerial *mSoftSerial;
+  
 };
 
 #endif

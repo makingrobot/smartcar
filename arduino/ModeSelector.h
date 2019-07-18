@@ -11,6 +11,11 @@ class ModeSelector
     ModeSelector::~ModeSelector();
 
     uint8_t GetMode();
+
+  private:
+    uint8_t mMode = 1;
+    uint8_t mInPin;
+  
 };
 
 #endif

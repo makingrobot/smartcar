@@ -2,18 +2,15 @@
 
 #define LineTurnDelay 100
 
-uint8_t nLeftPin;
-uint8_t nRightPin;
-
 InfraredTrack::InfraredTrack(uint8_t leftPin, uint8_t rightPin)
 {
-  nLeftPin = leftPin;
-  nRightPin = rightPin;
+  mLeftPin = leftPin;
+  mRightPin = rightPin;
 }
 
-int checkState() {
-  int left = analogRead(nLeftPin);
-  int right = analogRead(nRightPin);
+int InfraredTrack::CheckState() {
+  int left = analogRead(mLeftPin);
+  int right = analogRead(mRightPin);
   left = left > 512 ? 1 : 0;
   right = right > 512 ? 1 : 0;
   return left * 2 + right;
@@ -21,7 +18,7 @@ int checkState() {
 
 void InfraredTrack::Execute(MotorDriver driver)
 {
-  int state = checkState();
+  int state = CheckState();
   Serial.println(state);
   if (state==0 || state==3) {
     driver.Forward(MotoPowerMax);// 11, 00 向前

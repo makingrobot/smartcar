@@ -1,35 +1,32 @@
 #include "SoftSerialWrapper.h"
-#include <SoftwareSerial.h>
-
-SoftwareSerial *softSerial;
 
 SoftSerialWrapper::SoftSerialWrapper(uint8_t rxPin, uint8_t txPin, uint32_t baud)
 {
-  softSerial = new SoftwareSerial(rxPin, txPin);
-  softSerial->begin(baud);
+  mSoftSerial = new SoftwareSerial(rxPin, txPin);
+  mSoftSerial->begin(baud);
 }
 
 uint8_t SoftSerialWrapper::Available()
 {
-  return softSerial->available();
+  return mSoftSerial->available();
 }
 
 byte SoftSerialWrapper::Read()
 {
-  return softSerial->read();
+  return mSoftSerial->read();
 }
 
 void SoftSerialWrapper::Write(byte data)
 {
-  softSerial->write(data);
+  mSoftSerial->write(data);
 }
 
 void SoftSerialWrapper::Println()
 {
-  softSerial->println();
+  mSoftSerial->println();
 }
 
 SoftSerialWrapper::~SoftSerialWrapper()
 {
-  delete softSerial;
+  delete mSoftSerial;
 }

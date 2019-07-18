@@ -20,6 +20,15 @@ class MotorDriver
     TurnLeft(uint8_t power);
     TurnRight(uint8_t power);
     Stop();
+
+  private:
+    void Drive(uint8_t in1, uint8_t in2, uint8_t in3, uint8_t in4);
+   
+    uint8_t mLeftIn1;
+    uint8_t mLeftIn2;
+    uint8_t mRightIn1;
+    uint8_t mRightIn2;
+
 };
 
 #endif

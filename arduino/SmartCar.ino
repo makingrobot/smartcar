@@ -4,8 +4,8 @@ SerialWrapper mySerial;
 //SoftSerialWrapper mySerial(2, 3, 9600);
 
 #include "UltrasonicAO.h"
+#include "UltrasonicFL.h"
 #include "InfraredTrack.h"
-
 #include "BluetoothControl.h"
 #include "PS2xControl.h"
 #include "InfraredControl.h"
@@ -13,8 +13,8 @@ SerialWrapper mySerial;
 #include "ModeSelector.h"
 
 #define UltrasonicAOMode 1
-#define InfraredTrackMode 2
-#define FollowMode 3
+#define UltrasonicFLMode 2
+#define InfraredTrackMode 3
 #define InfraredCtrlMode 4
 #define BluetoothCtrlMode 5
 #define PS2xCtrlMode 6
@@ -48,6 +48,9 @@ void loop() {
       case UltrasonicAOMode:
         control = new UltrasonicAO(7, 8, 4);
         break;
+      case UltrasonicFLMode:
+        control = new UltrasonicFL(7, 8, 4);
+        break;  
       case InfraredTrackMode:
         control = new InfraredTrack(A0, A1);
         break;

@@ -11,6 +11,13 @@ class InfraredTrack : public SelfControl
 
   protected:
     virtual void Execute(MotorDriver driver);
+
+  private:
+    int CheckState();
+    
+    uint8_t mLeftPin;
+    uint8_t mRightPin;
+  
 };
 
 #endif

@@ -1,8 +1,5 @@
 #include "ModeSelector.h"
 
-uint8_t mMode = 1;
-uint8_t mInPin;
-
 const int AD_VALUES[8] = {62, 190, 317, 446, 574, 702, 831, 960};
 const int TOLERANCE = 15;
 const int TIMES = 5;

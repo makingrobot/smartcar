@@ -1,7 +1,5 @@
 #include "BluetoothControl.h"
 
-SerialWrapper mSerial;
-
 BluetoothControl::BluetoothControl(SerialWrapper serial)
 {
   mSerial = serial;
