@@ -11,5 +11,5 @@ arduino程序使用模块化设计，可扩展各类玩法。
 * 红外遥控
 * 蓝牙遥控
 * PS2遥控
-
+### 代码架构
 ![arduino代码架构](https://github.com/makingrobot/smartcar/blob/master/architecture.jpg)
