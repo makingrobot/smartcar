@@ -1,47 +1,24 @@
 #include "BluetoothControl.h"
 
-#include <SoftwareSerial.h>
+SerialWrapper mSerial;
 
-bool bUseSoftSerial = false;
-
-SoftwareSerial *softSerial;
-
-BluetoothControl::BluetoothControl()
+BluetoothControl::BluetoothControl(SerialWrapper serial)
 {
-}
-
-BluetoothControl::BluetoothControl(uint8_t rxPin, uint8_t txPin, uint32_t baud)
-{
-  bUseSoftSerial = true;
-  softSerial = new SoftwareSerial(rxPin, txPin); // RX, TX
-  softSerial->begin(baud);
+  mSerial = serial;
 }
 
 void BluetoothControl::ReadInput()
 {
    uint8_t action=0;
 
-  if (bUseSoftSerial)
-  { 
-    while (softSerial->available() > 0) {
-      uint8_t in = softSerial->read();
-      delay(2);
-      if (in == -1)
-        continue;
-  
-      Serial.println(in, BIN);
-      action = in;
-    }
-  } else {
-    while (Serial.available() > 0) {
-      uint8_t in = Serial.read();
-      delay(2);
-      
-      if (in == -1)
-        continue;
-        
-      action = in;
-    }
+  while (mSerial.Available() > 0) {
+    uint8_t in = mSerial.Read();
+    delay(2);
+    if (in == -1)
+      continue;
+
+    Serial.println(in, BIN);
+    action = in;
   }
 
   if (action > 64) {
@@ -94,21 +71,11 @@ void BluetoothControl::ReadInput()
      carAngleValue=0;
   }
 
-// feedback
-  if (bUseSoftSerial)
-  {
-    softSerial->write(carAccelValue);
-    softSerial->println();
-  } else {
-    Serial.write(carAccelValue);
-    Serial.println();
-  }
+  // feedback
+  mSerial.Write(carAccelValue);
+  mSerial.Println();
 }
 
 BluetoothControl::~BluetoothControl()
-{
-  if (bUseSoftSerial)
-  {
-    delete softSerial;
-  }
+{ 
 }

@@ -1,3 +1,8 @@
+
+SerialWrapper mySerial;
+//#include "SoftSerialWrapper.h"
+//SoftSerialWrapper mySerial(2, 3, 9600);
+
 #include "UltrasonicAO.h"
 #include "InfraredTrack.h"
 
@@ -5,22 +10,22 @@
 #include "PS2xControl.h"
 #include "InfraredControl.h"
 
-#define UltrasonicAOMode 0
-#define InfraredTrackMode 1
-#define FollowMode 2
-#define InfraredCtrlMode 3
-#define BluetoothCtrlMode 4
-#define PS2xCtrlMode 5
+#include "ModeSelector.h"
 
-#define USE_SOFTSERIAL
+#define UltrasonicAOMode 1
+#define InfraredTrackMode 2
+#define FollowMode 3
+#define InfraredCtrlMode 4
+#define BluetoothCtrlMode 5
+#define PS2xCtrlMode 6
 
+ModeSelector modeSel(A0);
 MotorDriver driver(5, 6, 9, 10);
 
-uint8_t mode = -1;
+uint8_t mode = 0;
 Control *control = NULL;
 
 void setup() {
-  mode = 0;
 
   Serial.begin(9600);
   Serial.println("AiCar started.");
@@ -28,7 +33,7 @@ void setup() {
 
 void loop() {
 
-  uint8_t newMode = 0;
+  uint8_t newMode = modeSel.GetMode();
 
   if (newMode != mode)
   {
@@ -50,11 +55,7 @@ void loop() {
         control = new InfraredControl(3);
         break;
       case BluetoothCtrlMode:
-#ifdef USE_SOFTSERIAL
-        control = new BluetoothControl(2, 3, 9600);
-#else
-        control = new BluetoothControl();
-#endif                
+        control = new BluetoothControl(mySerial);
         break;
       case PS2xCtrlMode:
         control = new PS2xControl(11, 12, 13, 5);
