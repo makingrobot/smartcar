@@ -7,15 +7,8 @@
 class ModeSelector
 {
   public:
-    ModeSelector::ModeSelector(uint8_t inPin);
-    ModeSelector::~ModeSelector();
+    virtual uint8_t GetMode() ;
 
-    uint8_t GetMode();
-
-  private:
-    uint8_t mMode = 1;
-    uint8_t mInPin;
-  
 };
 
 #endif

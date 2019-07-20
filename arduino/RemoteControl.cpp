@@ -10,7 +10,7 @@ void RemoteControl::Execute(MotorDriver driver)
    accelPressState=0;
    stopPressState=0;
    
-    this->ReadInput();
+   this->ReadInput();
 
    if (forwardPressState==1)
     Serial.println("Up held this hard: ");

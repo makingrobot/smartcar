@@ -12,10 +12,10 @@ class SoftSerialWrapper : public SerialWrapper
     SoftSerialWrapper(uint8_t rxPin, uint8_t txPin, uint32_t baud);
     ~SoftSerialWrapper();
 
-    virtual uint8_t Available();
-    virtual byte Read();
-    virtual void Write(byte data);
-    virtual void Println();
+    uint8_t Available() override;
+    byte Read() override;
+    void Write(byte data) override;
+    void Println() override;
 
   private:
     SoftwareSerial *mSoftSerial;

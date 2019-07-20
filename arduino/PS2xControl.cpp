@@ -2,25 +2,22 @@
 
 #include <PS2X_lib.h>  //for v1.6
 
-//#define pressures   true
 #define pressures   false
-//#define rumble      true
 #define rumble      false
 
-PS2X *ps2x; // create PS2 Controller Class
+PS2X ps2x; // create PS2 Controller Class
 int ps2x_error = 0;
 byte ps2x_type = 0;
 byte ps2x_vibrate = 0;
 
-PS2xControl::PS2xControl(uint8_t cmd, uint8_t clk, uint8_t dat, uint8_t cs)
+PS2xControl::PS2xControl(uint8_t clk, uint8_t cmd, uint8_t dat, uint8_t cs)
 {
-    delay(300);  //added delay to give wireless ps2 module some time to startup, before configuring it
+    delay(1000);  //added delay to give wireless ps2 module some time to startup, before configuring it
    
     //CHANGES for v1.6 HERE!!! **************PAY ATTENTION*************
-    ps2x = new PS2X();
     
     //setup pins and settings: GamePad(clock, command, attention, data, Pressures?, Rumble?) check for error
-    ps2x_error = ps2x->config_gamepad(clk, cmd, cs, dat, pressures, rumble);
+    ps2x_error = ps2x.config_gamepad(clk, cmd, cs, dat, pressures, rumble);
     
     if(ps2x_error == 0){
       Serial.print("Found Controller, configured successful ");
@@ -49,7 +46,7 @@ PS2xControl::PS2xControl(uint8_t cmd, uint8_t clk, uint8_t dat, uint8_t cs)
     
   //  Serial.print(ps2x.Analog(1), HEX);
     
-    ps2x_type = ps2x->readType(); 
+    ps2x_type = ps2x.readType(); 
     switch(ps2x_type) {
       case 0:
         Serial.print("Unknown Controller type found ");
@@ -68,15 +65,18 @@ PS2xControl::PS2xControl(uint8_t cmd, uint8_t clk, uint8_t dat, uint8_t cs)
 
 void PS2xControl::ReadInput()
 {
-    ps2x->read_gamepad(false, ps2x_vibrate); //read controller and set large motor to spin at 'vibrate' speed
+  if (ps2x_error != 0)
+    return;
+    
+  ps2x.read_gamepad(false, ps2x_vibrate); //read controller and set large motor to spin at 'vibrate' speed
 
-  if(ps2x->Button(PSB_PAD_DOWN)){   //will be TRUE as long as button is pressed
+  if(ps2x.Button(PSB_PAD_DOWN)){   //will be TRUE as long as button is pressed
     backwardPressState=1;
     carAngleValue=0;
-  } else if(ps2x->Button(PSB_PAD_UP)) {   
+  } else if(ps2x.Button(PSB_PAD_UP)) {   
     forwardPressState=1;
     carAngleValue=0;
-  } else if(ps2x->Button(PSB_PAD_RIGHT)){
+  } else if(ps2x.Button(PSB_PAD_RIGHT)){
     rightPressState=1;
     
     if (carAngleValue<20)
@@ -88,7 +88,7 @@ void PS2xControl::ReadInput()
       
     if (carAngleValue>45)
       carAngleValue=45;
-  } else if(ps2x->Button(PSB_PAD_LEFT)){
+  } else if(ps2x.Button(PSB_PAD_LEFT)){
     leftPressState=1;
     
     if (carAngleValue>-20)
@@ -102,7 +102,7 @@ void PS2xControl::ReadInput()
       carAngleValue=-45;
   }
    
-  if (ps2x->Button(PSB_CIRCLE)) {
+  if (ps2x.Button(PSB_CIRCLE)) {
      accelPressState=1;
      if (carAccelValue < 100)
         carAccelValue+=1;
@@ -111,7 +111,7 @@ void PS2xControl::ReadInput()
       carAccelValue-=1;
     }
   }
-  if (ps2x->Button(PSB_SQUARE)) {
+  if (ps2x.Button(PSB_SQUARE)) {
      stopPressState=1;
      carAccelValue=0;
      carAngleValue=0;
@@ -120,5 +120,4 @@ void PS2xControl::ReadInput()
 
 PS2xControl::~PS2xControl()
 {
-  delete ps2x;
 }

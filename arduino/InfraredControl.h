@@ -11,7 +11,7 @@ class InfraredControl : public RemoteControl
     ~InfraredControl();
 
   protected:
-    virtual void ReadInput();
+    void ReadInput() override;
 
   private:
     IRrecv *mIRrecv;

@@ -1,6 +1,6 @@
 #include "BluetoothControl.h"
 
-BluetoothControl::BluetoothControl(SerialWrapper serial)
+BluetoothControl::BluetoothControl(SerialWrapper *serial)
 {
   mSerial = serial;
 }
@@ -9,12 +9,13 @@ void BluetoothControl::ReadInput()
 {
    uint8_t action=0;
 
-  while (mSerial.Available() > 0) {
-    uint8_t in = mSerial.Read();
+  while (mSerial->Available() > 0) {
+    uint8_t in = mSerial->Read();
     delay(2);
     if (in == -1)
       continue;
 
+    Serial.print("input:");
     Serial.println(in, BIN);
     action = in;
   }
@@ -70,8 +71,9 @@ void BluetoothControl::ReadInput()
   }
 
   // feedback
-  mSerial.Write(carAccelValue);
-  mSerial.Println();
+  mSerial->Write("car accel:");
+  mSerial->Write(carAccelValue);
+  mSerial->Println();
 }
 
 BluetoothControl::~BluetoothControl()

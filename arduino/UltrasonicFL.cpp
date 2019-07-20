@@ -10,9 +10,9 @@ void UltrasonicFL::Servo(uint16_t angle) { //定义一个脉冲函数
   //发送50个脉冲
   for(int i=0;i<50;i++){
     int pulsewidth = (angle * 11) + 500; //将角度转化为500-2480的脉宽值
-    digitalWrite(nSeroPin, HIGH);   //将舵机接口电平至高
+    digitalWrite(mSeroPin, HIGH);   //将舵机接口电平至高
     delayMicroseconds(pulsewidth);  //延时脉宽值的微秒数
-    digitalWrite(nSeroPin, LOW);    //将舵机接口电平至低
+    digitalWrite(mSeroPin, LOW);    //将舵机接口电平至低
     delayMicroseconds(20000 - pulsewidth);
   }
   delay(100);
@@ -25,13 +25,13 @@ void UltrasonicFL::LookForward() {//向前看
 
 float UltrasonicFL::CheckDistance() {//超声波探测障碍物距离函数
   float distance;
-  digitalWrite(nTrigPin, LOW);
+  digitalWrite(mTrigPin, LOW);
   delayMicroseconds(2);
-  digitalWrite(nTrigPin, HIGH);
+  digitalWrite(mTrigPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(nTrigPin, LOW);
+  digitalWrite(mTrigPin, LOW);
   // 检测脉冲宽度，并计算出距离
-  distance = pulseIn(nEchoPin, HIGH) / 58.00;
+  distance = pulseIn(mEchoPin, HIGH) / 58.00;
 
   Serial.print("Distance:");
   Serial.print(distance);
@@ -43,7 +43,9 @@ float UltrasonicFL::CheckDistance() {//超声波探测障碍物距离函数
 
 UltrasonicFL::UltrasonicFL(uint8_t echoPin, uint8_t trigPin, uint8_t seroPin)
 {
-  nSeroPin = seroPin;
+  mEchoPin = echoPin;
+  mTrigPin = trigPin;
+  mSeroPin = seroPin;
   
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);

@@ -1,18 +1,18 @@
 #include "UltrasonicAO.h"
 
 #define KeepAway 25//离障碍最近距离
-#define LookDelay 300//转动舵机的停顿时间
-#define TurnDelay 500//转向停顿时间，通过停顿时间控制转弯角度大小
-#define BackDelay 600//倒退时间
+#define LookDelay 100//转动舵机的停顿时间
+#define TurnDelay 200//转向停顿时间，通过停顿时间控制转弯角度大小
+#define BackDelay 200//倒退时间
 #define ReboundDelay 150 //反弹时间
 
 void UltrasonicAO::Servo(uint16_t angle) { //定义一个脉冲函数
   //发送50个脉冲
   for(int i=0;i<50;i++){
     int pulsewidth = (angle * 11) + 500; //将角度转化为500-2480的脉宽值
-    digitalWrite(nSeroPin, HIGH);   //将舵机接口电平至高
+    digitalWrite(mSeroPin, HIGH);   //将舵机接口电平至高
     delayMicroseconds(pulsewidth);  //延时脉宽值的微秒数
-    digitalWrite(nSeroPin, LOW);    //将舵机接口电平至低
+    digitalWrite(mSeroPin, LOW);    //将舵机接口电平至低
     delayMicroseconds(20000 - pulsewidth);
   }
   delay(100);
@@ -30,13 +30,13 @@ void UltrasonicAO::LookForward() {//向前看
 
 float UltrasonicAO::CheckDistance() {//超声波探测障碍物距离函数
   float distance;
-  digitalWrite(nTrigPin, LOW);
+  digitalWrite(mTrigPin, LOW);
   delayMicroseconds(2);
-  digitalWrite(nTrigPin, HIGH);
+  digitalWrite(mTrigPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(nTrigPin, LOW);
+  digitalWrite(mTrigPin, LOW);
   // 检测脉冲宽度，并计算出距离
-  distance = pulseIn(nEchoPin, HIGH) / 58.00;
+  distance = pulseIn(mEchoPin, HIGH) / 58.00;
 
   Serial.print("Distance:");
   Serial.print(distance);
@@ -68,7 +68,9 @@ int UltrasonicAO::LookAround() {//观察周围情况，并返回方向代码
 
 UltrasonicAO::UltrasonicAO(uint8_t echoPin, uint8_t trigPin, uint8_t seroPin)
 {
-  nSeroPin = seroPin;
+  mEchoPin = echoPin;
+  mTrigPin = trigPin;
+  mSeroPin = seroPin;
   
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
@@ -82,45 +84,40 @@ void UltrasonicAO::Execute(MotorDriver driver)
   if (distance > KeepAway) {//如果距离大于最小距离
     driver.Forward(MotoPowerMax);//一直向前
   } else {
-    for (int i = 0; i < 100; i++)
-    {
-      driver.Stop();
-      //goRebound();
-      driver.Backward(MotoPowerMax);
-       delay(ReboundDelay);
-      driver.Stop();
-  
-      switch (LookAround()) {//判断观察周围情况结果，并执行相应动作
-        case 1:
-          driver.TurnRight(MotoPowerMin);
-          delay(TurnDelay);
-          driver.Stop();
-          return;
-        case 2:
-          driver.TurnRight(MotoPowerMin);
-          delay(TurnDelay / 2);
-          driver.Stop();
-          return;
-        case 3:
-          driver.Forward(MotoPowerMax);
-          return;
-        case 4:
-          driver.TurnLeft(MotoPowerMin);
-          delay(TurnDelay / 2);
-          driver.Stop();
-          return;
-        case 5:
-          driver.TurnLeft(MotoPowerMin);
-          delay(TurnDelay);
-          driver.Stop();
-          return;
-        default:
-          break;
-      }
-      driver.Backward(MotoPowerMin);
-      delay(BackDelay);
-      driver.Stop();
+    
+    driver.Stop();
+    driver.Backward(MotoPowerMax);
+    delay(ReboundDelay);
+    driver.Stop();
+
+    switch (LookAround()) {//判断观察周围情况结果，并执行相应动作
+      case 1:
+        driver.TurnRight(MotoPowerMin);
+        delay(TurnDelay);
+        driver.Stop();
+        return;
+      case 2:
+        driver.TurnRight(MotoPowerMin);
+        delay(TurnDelay / 2);
+        driver.Stop();
+        return;
+      case 3:
+        driver.Forward(MotoPowerMax);
+        return;
+      case 4:
+        driver.TurnLeft(MotoPowerMin);
+        delay(TurnDelay / 2);
+        driver.Stop();
+        return;
+      case 5:
+        driver.TurnLeft(MotoPowerMin);
+        delay(TurnDelay);
+        driver.Stop();
+        return;
+      default:
+        break;
     }
+    
   }
 }
 
