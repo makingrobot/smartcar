@@ -1,6 +1,6 @@
 #include "RemoteControl.h"
 
-void RemoteControl::Execute(MotorDriver driver)
+void RemoteControl::Execute(MotorDriver driver, Output output)
 {
    leftPressState=0;
    rightPressState=0;

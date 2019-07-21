@@ -10,7 +10,7 @@ class InfraredTrack : public SelfControl
     ~InfraredTrack();
 
   protected:
-    void Execute(MotorDriver driver) override;
+    void Execute(MotorDriver driver, Output output) override;
 
   private:
     int CheckState();

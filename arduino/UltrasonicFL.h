@@ -7,10 +7,10 @@
 class UltrasonicFL : public SelfControl
 {
    public:
-     UltrasonicFL(uint8_t echoPin, uint8_t trigPin, uint8_t servoPin);
+     UltrasonicFL(uint8_t echoPin, uint8_t trigPin, ServoDriver *servoDriver);
      ~UltrasonicFL();
 
-    void Execute(MotorDriver driver) override;
+    void Execute(MotorDriver driver, Output output) override;
     
   private:
     void LookForward();

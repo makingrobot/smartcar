@@ -7,15 +7,15 @@
 class UltrasonicAO : public SelfControl
 {
    public:
-     UltrasonicAO(uint8_t echoPin, uint8_t trigPin, uint8_t servoPin);
+     UltrasonicAO(uint8_t echoPin, uint8_t trigPin, ServoDriver *servoDriver);
      ~UltrasonicAO();
 
-    void Execute(MotorDriver driver) override;
+    void Execute(MotorDriver driver, Output output) override;
 
   private:
     void LookForward();
     int LookAround();
-    void LookAngle(uint16_t angle);
+    void LookAngle(int angle);
     float CheckDistance();  
     
     ServoDriver *mServoDriver;

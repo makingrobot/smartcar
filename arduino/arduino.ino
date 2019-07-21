@@ -1,3 +1,8 @@
+#define USE_SOFTSERIAL
+
+#include "ADC8Selector.h"
+#include "Output.h"
+
 #include "UltrasonicAO.h"
 #include "UltrasonicFL.h"
 #include "InfraredTrack.h"
@@ -6,9 +11,8 @@
 
 #include "SerialWrapper.h"
 #include "BluetoothControl.h"
-
-#include "ADC8Selector.h"
-//#include "SoftSerialWrapper.h"
+#include "ServoDriver.h"
+#include "LcdDisplay.h"
 
 //Control Mode
 #define PS2xCtrlMode          1
@@ -37,13 +41,26 @@
 #define Infrared_Right        A1
 #define ADC8_Selector         A3
 #define TWI_Clock             A4  //TWI
-#define TWI_Data              A5  //TWI 
+#define TWI_Data              A5  //TWI
 
-MotorDriver driver(Motor_LeftIn1, Motor_LeftIn2, Motor_RightIn1, Motor_RightIn2);
+#ifdef USE_SOFTSERIAL
+#include "SoftSerialWrapper.h"
+#include "CustomServoDriver.h"
+ServoDriver *servoDriver = new CustomServoDriver(Servo_Out);
+SerialWrapper *mySerial = new SoftSerialWrapper(2, 3, 9600);
+#else
+#include "DefaultServoDriver.h"
+ServoDriver *servoDriver = new DefaultServoDriver(Servo_Out);
+SerialWrapper *mySerial = new SerialWrapper();
+#endif
 
-ModeSelector *modeSel = NULL;
+Display *display = new Display(); //LcdDisplay(0x0, 20, 4);
+LedController *ledController = new LedController();
+
+MotorDriver motorDriver(Motor_LeftIn1, Motor_LeftIn2, Motor_RightIn1, Motor_RightIn2);
+Output output(display, ledController);
+ADC8Selector modeSel(ADC8_Selector);
 Control *control = NULL;
-SerialWrapper *mySerial = NULL;
 
 uint8_t mode = 0;
 
@@ -51,15 +68,11 @@ void setup() {
 
   Serial.begin(9600);
   Serial.println("AiCar started.");
-
-  modeSel = new ADC8Selector(ADC8_Selector);
-  mySerial = new SerialWrapper();
-//  mySerial = new SoftSerialWrapper(2, 3, 9600);
 }
 
 void loop() {
 
-  uint8_t newMode = modeSel->GetMode();
+  uint8_t newMode = modeSel.GetMode();
 
   if (newMode != mode)
   {
@@ -84,10 +97,10 @@ void loop() {
         control = new InfraredControl(Infrared_Ctrl_In);
         break;
       case UltrasonicAOMode:
-        control = new UltrasonicAO(Ultrasonic_Echo, Ultrasonic_Trig, Servo_Out);
+        control = new UltrasonicAO(Ultrasonic_Echo, Ultrasonic_Trig, servoDriver);
         break;
       case UltrasonicFLMode:
-        control = new UltrasonicFL(Ultrasonic_Echo, Ultrasonic_Trig, Servo_Out);
+        control = new UltrasonicFL(Ultrasonic_Echo, Ultrasonic_Trig, servoDriver);
         break;  
       case InfraredTrackMode:
         control = new InfraredTrack(Infrared_Left, Infrared_Right);
@@ -103,6 +116,6 @@ void loop() {
     mode = newMode;
   }
   
-  control->Execute(driver);
+  control->Execute(motorDriver, output);
   
 }

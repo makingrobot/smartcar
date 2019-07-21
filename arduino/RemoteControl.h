@@ -7,7 +7,7 @@
 class RemoteControl : public Control
 {
    public:
-     void Execute(MotorDriver driver) override;
+     void Execute(MotorDriver driver, Output output) override;
      
    protected:
      virtual void ReadInput();

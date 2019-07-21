@@ -1,6 +1,7 @@
+#include <Arduino.h>
 #include "SoftSerialWrapper.h"
 
-SoftSerialWrapper::SoftSerialWrapper(uint8_t rxPin, uint8_t txPin, uint32_t baud)
+SoftSerialWrapper::SoftSerialWrapper(uint8_t rxPin, uint8_t txPin, int baud)
 {
   mSoftSerial = new SoftwareSerial(rxPin, txPin);
   mSoftSerial->begin(baud);

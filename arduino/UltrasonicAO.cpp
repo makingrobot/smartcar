@@ -7,17 +7,17 @@
 #define BackDelay 200//倒退时间
 #define ReboundDelay 150 //反弹时间
 
-UltrasonicAO::UltrasonicAO(uint8_t echoPin, uint8_t trigPin, uint8_t servoPin)
+UltrasonicAO::UltrasonicAO(uint8_t echoPin, uint8_t trigPin, ServoDriver *servoDriver)
 {
   mEchoPin = echoPin;
   mTrigPin = trigPin;
-  mServoDriver = new ServoDriver(servoPin);
+  mServoDriver = servoDriver;
   
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
 }
 
-void UltrasonicAO::Execute(MotorDriver driver)
+void UltrasonicAO::Execute(MotorDriver driver, Output output)
 {
    LookForward();//调整超声波探测模块向前看
   int distance = CheckDistance();//查看距离
@@ -62,7 +62,7 @@ void UltrasonicAO::Execute(MotorDriver driver)
 }
 
 
-void UltrasonicAO::LookAngle(uint16_t angle) {
+void UltrasonicAO::LookAngle(int angle) {
   mServoDriver->Drive(angle);
   delay(LookDelay);
 }
@@ -111,5 +111,4 @@ int UltrasonicAO::LookAround() {//观察周围情况，并返回方向代码
 
 UltrasonicAO::~UltrasonicAO()
 {
-  delete mServoDriver;
 }

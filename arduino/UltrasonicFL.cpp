@@ -7,17 +7,17 @@
 #define BackDelay 600//倒退时间
 #define ReboundDelay 150 //反弹时间
 
-UltrasonicFL::UltrasonicFL(uint8_t echoPin, uint8_t trigPin, uint8_t servoPin)
+UltrasonicFL::UltrasonicFL(uint8_t echoPin, uint8_t trigPin, ServoDriver *servoDriver)
 {
   mEchoPin = echoPin;
   mTrigPin = trigPin;
-  mServoDriver = new ServoDriver(servoPin);
+  mServoDriver = servoDriver;
   
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
 }
 
-void UltrasonicFL::Execute(MotorDriver driver)
+void UltrasonicFL::Execute(MotorDriver driver, Output output)
 {
    LookForward();//调整超声波探测模块向前看
    int distance = CheckDistance();//查看距离
@@ -53,5 +53,4 @@ float UltrasonicFL::CheckDistance() {//超声波探测障碍物距离函数
 
 UltrasonicFL::~UltrasonicFL()
 {
-  delete mServoDriver;
 }

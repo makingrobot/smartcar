@@ -16,7 +16,7 @@ int InfraredTrack::CheckState() {
   return left * 2 + right;
 }
 
-void InfraredTrack::Execute(MotorDriver driver)
+void InfraredTrack::Execute(MotorDriver driver, Output output)
 {
   int state = CheckState();
   Serial.println(state);

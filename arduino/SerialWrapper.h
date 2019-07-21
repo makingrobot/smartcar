@@ -2,7 +2,7 @@
 #define __SERIAL_WRAPPER_H_
 #pragma once
 
-#include "Arduino.h"
+#include <Arduino.h>
 
 class SerialWrapper
 {
