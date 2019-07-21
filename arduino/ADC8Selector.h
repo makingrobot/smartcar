@@ -8,8 +8,8 @@
 class ADC8Selector : public ModeSelector
 {
   public:
-    ADC8Selector::ADC8Selector(uint8_t inPin);
-    ADC8Selector::~ADC8Selector();
+    ADC8Selector(uint8_t inPin);
+    ~ADC8Selector();
 
     uint8_t GetMode() override;
 

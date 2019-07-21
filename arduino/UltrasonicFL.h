@@ -2,21 +2,21 @@
 #define __ULTRASONIC_FL_H_
 
 #include "SelfControl.h"
+#include "ServoDriver.h"
 
 class UltrasonicFL : public SelfControl
 {
    public:
-     UltrasonicFL(uint8_t echoPin, uint8_t trigPin, uint8_t seroPin);
+     UltrasonicFL(uint8_t echoPin, uint8_t trigPin, uint8_t servoPin);
      ~UltrasonicFL();
 
     void Execute(MotorDriver driver) override;
     
   private:
-    void Servo(uint16_t angle);
     void LookForward();
     float CheckDistance();  
     
-    uint8_t mSeroPin;
+    ServoDriver *mServoDriver;
     uint8_t mTrigPin;
     uint8_t mEchoPin;
 

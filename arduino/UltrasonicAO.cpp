@@ -1,4 +1,5 @@
 #include "UltrasonicAO.h"
+#include "ServoDriver.h"
 
 #define KeepAway 25//离障碍最近距离
 #define LookDelay 100//转动舵机的停顿时间
@@ -6,75 +7,14 @@
 #define BackDelay 200//倒退时间
 #define ReboundDelay 150 //反弹时间
 
-void UltrasonicAO::Servo(uint16_t angle) { //定义一个脉冲函数
-  //发送50个脉冲
-  for(int i=0;i<50;i++){
-    int pulsewidth = (angle * 11) + 500; //将角度转化为500-2480的脉宽值
-    digitalWrite(mSeroPin, HIGH);   //将舵机接口电平至高
-    delayMicroseconds(pulsewidth);  //延时脉宽值的微秒数
-    digitalWrite(mSeroPin, LOW);    //将舵机接口电平至低
-    delayMicroseconds(20000 - pulsewidth);
-  }
-  delay(100);
-}
-
-void UltrasonicAO::LookAngle(uint16_t angle) {
-  Servo(angle);
-  delay(LookDelay);
-}
-
-void UltrasonicAO::LookForward() {//向前看
-  Servo(90);
-  delay(LookDelay);
-}
-
-float UltrasonicAO::CheckDistance() {//超声波探测障碍物距离函数
-  float distance;
-  digitalWrite(mTrigPin, LOW);
-  delayMicroseconds(2);
-  digitalWrite(mTrigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(mTrigPin, LOW);
-  // 检测脉冲宽度，并计算出距离
-  distance = pulseIn(mEchoPin, HIGH) / 58.00;
-
-  Serial.print("Distance:");
-  Serial.print(distance);
-  Serial.print("cm");
-  Serial.println();
-  
-  return distance;
-}
-
-int UltrasonicAO::LookAround() {//观察周围情况，并返回方向代码
-  LookAngle(30);
-  int D1 = CheckDistance();
-  LookAngle(60);
-  int D2 = CheckDistance();
-  LookForward();
-  int D3 = CheckDistance();
-  LookAngle(120);
-  int D4 = CheckDistance();
-  LookAngle(150);
-  int D5 = CheckDistance();
-  if (D1 > D2 && D1 > D3 && D1 > D4 && D1 > D5 && D1 > KeepAway)return 1;
-  if (D2 > D1 && D2 > D3 && D2 > D4 && D2 > D5 && D2 > KeepAway)return 2;
-  if (D3 > D2 && D3 > D1 && D3 > D4 && D3 > D5 && D3 > KeepAway)return 3;
-  if (D4 > D2 && D4 > D3 && D4 > D1 && D4 > D5 && D4 > KeepAway)return 4;
-  if (D5 > D2 && D5 > D3 && D5 > D4 && D5 > D1 && D5 > KeepAway)return 5;
-  return 0;
-}
-
-
-UltrasonicAO::UltrasonicAO(uint8_t echoPin, uint8_t trigPin, uint8_t seroPin)
+UltrasonicAO::UltrasonicAO(uint8_t echoPin, uint8_t trigPin, uint8_t servoPin)
 {
   mEchoPin = echoPin;
   mTrigPin = trigPin;
-  mSeroPin = seroPin;
+  mServoDriver = new ServoDriver(servoPin);
   
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
-  pinMode(seroPin, OUTPUT);
 }
 
 void UltrasonicAO::Execute(MotorDriver driver)
@@ -121,7 +61,55 @@ void UltrasonicAO::Execute(MotorDriver driver)
   }
 }
 
+
+void UltrasonicAO::LookAngle(uint16_t angle) {
+  mServoDriver->Drive(angle);
+  delay(LookDelay);
+}
+
+void UltrasonicAO::LookForward() {//向前看
+  mServoDriver->Drive(90);
+  delay(LookDelay);
+}
+
+float UltrasonicAO::CheckDistance() {//超声波探测障碍物距离函数
+  float distance;
+  digitalWrite(mTrigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(mTrigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(mTrigPin, LOW);
+  // 检测脉冲宽度，并计算出距离
+  distance = pulseIn(mEchoPin, HIGH) / 58.00;
+
+  Serial.print("Distance:");
+  Serial.print(distance);
+  Serial.print("cm");
+  Serial.println();
+  
+  return distance;
+}
+
+int UltrasonicAO::LookAround() {//观察周围情况，并返回方向代码
+  LookAngle(30);
+  int D1 = CheckDistance();
+  LookAngle(60);
+  int D2 = CheckDistance();
+  LookForward();
+  int D3 = CheckDistance();
+  LookAngle(120);
+  int D4 = CheckDistance();
+  LookAngle(150);
+  int D5 = CheckDistance();
+  if (D1 > D2 && D1 > D3 && D1 > D4 && D1 > D5 && D1 > KeepAway)return 1;
+  if (D2 > D1 && D2 > D3 && D2 > D4 && D2 > D5 && D2 > KeepAway)return 2;
+  if (D3 > D2 && D3 > D1 && D3 > D4 && D3 > D5 && D3 > KeepAway)return 3;
+  if (D4 > D2 && D4 > D3 && D4 > D1 && D4 > D5 && D4 > KeepAway)return 4;
+  if (D5 > D2 && D5 > D3 && D5 > D4 && D5 > D1 && D5 > KeepAway)return 5;
+  return 0;
+}
+
 UltrasonicAO::~UltrasonicAO()
 {
-  
+  delete mServoDriver;
 }
