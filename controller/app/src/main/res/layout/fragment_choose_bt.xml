@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	tools:context=".ChooseBtFragment">
+
+	<LinearLayout
+		android:id="@+id/topl"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<Button
+			android:id="@+id/btn_search"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="搜索设备" />
+
+		<Button
+			android:id="@+id/btn_connect"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="连接设备"
+			android:visibility="gone"
+			/>
+
+		<Button
+			android:id="@+id/btn_send"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="发送指令" />
+
+		<Button
+			android:id="@+id/btn_close"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="断开设备" />
+
+		<Button
+			android:id="@+id/get_sn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="SN" />
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/parent_l1"
+		android:layout_below="@id/topl"
+		android:layout_marginTop="4dp"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<TextView
+			android:id="@+id/status"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+	</LinearLayout>
+	　
+
+	<RelativeLayout
+		android:id="@+id/parent_r2"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@id/parent_l1"
+		android:orientation="vertical">
+
+		<ProgressBar
+			android:id="@+id/progressbar"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp" />
+
+		<TextView
+			android:id="@+id/context"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/progressbar"
+			android:layout_marginTop="10dp"
+			android:textSize="10sp" />
+
+
+	</RelativeLayout>
+	　
+
+	<RelativeLayout
+		android:id="@+id/parent_r1"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_marginTop="4dp"
+		android:layout_below="@id/parent_l1"
+		android:visibility="gone">
+
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/blue_rv"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+	</RelativeLayout>
+
+</RelativeLayout>
