@@ -1,3 +1,7 @@
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
 #include "PCF8574LedController.h"
 //#include <PCF8574.h>
 

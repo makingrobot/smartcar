@@ -1,3 +1,7 @@
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
 #include "MotorDriver.h"
 
 MotorDriver::MotorDriver(uint8_t leftIn1, uint8_t leftIn2, uint8_t rightIn1, uint8_t rightIn2)

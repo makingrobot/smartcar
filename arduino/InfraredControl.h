@@ -1,5 +1,9 @@
-#ifndef __INFRARED_CONTROL_H_
-#define __INFRARED_CONTROL_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _INFRARED_CONTROL_H_
+#define _INFRARED_CONTROL_H_
 
 #include "RemoteControl.h"
 #include <IRremote.h>

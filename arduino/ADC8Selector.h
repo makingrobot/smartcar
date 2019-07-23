@@ -1,5 +1,9 @@
-#ifndef __ADC8_SELECTOR_H_
-#define __ADC8_SELECTOR_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _ADC8_SELECTOR_H_
+#define _ADC8_SELECTOR_H_
 #pragma once
 
 #include "Arduino.h"

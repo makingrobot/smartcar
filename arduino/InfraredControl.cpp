@@ -1,3 +1,7 @@
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
 #include "InfraredControl.h"
 
 InfraredControl::InfraredControl(uint8_t inPin)

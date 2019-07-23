@@ -1,5 +1,9 @@
-#ifndef __PCF8574_LED_CONTROLLER_H_
-#define __PCF8574_LED_CONTROLLER_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _PCF8574_LED_CONTROLLER_H_
+#define _PCF8574_LED_CONTROLLER_H_
 #pragma once
 
 #include "LedController.h"

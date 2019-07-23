@@ -1,3 +1,7 @@
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
 #include "CustomServoDriver.h"
 
 CustomServoDriver::CustomServoDriver(uint8_t servoPin)

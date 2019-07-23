@@ -1,5 +1,9 @@
-#ifndef __REMOTE_CONTROL_H_
-#define __REMOTE_CONTROL_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _REMOTE_CONTROL_H_
+#define _REMOTE_CONTROL_H_
 #pragma once
 
 #include "Control.h"

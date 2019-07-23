@@ -1,5 +1,9 @@
-#ifndef __LED_CONTROLLER_H_
-#define __LED_CONTROLLER_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _LED_CONTROLLER_H_
+#define _LED_CONTROLLER_H_
 #pragma once
 
 #include <Arduino.h>

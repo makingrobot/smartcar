@@ -1,5 +1,9 @@
-#ifndef __SERIAL_WRAPPER_H_
-#define __SERIAL_WRAPPER_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _SERIAL_WRAPPER_H_
+#define _SERIAL_WRAPPER_H_
 #pragma once
 
 #include <Arduino.h>

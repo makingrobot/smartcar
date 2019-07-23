@@ -1,3 +1,7 @@
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
 #include "RemoteControl.h"
 
 void RemoteControl::Execute(MotorDriver driver, Output output)

@@ -1,3 +1,7 @@
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
 #include "ADC8Selector.h"
 
 const int AD_VALUES[8] = {62, 190, 317, 446, 574, 702, 831, 960};

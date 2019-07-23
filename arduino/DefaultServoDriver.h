@@ -1,5 +1,9 @@
-#ifndef __DEFAULT_SERVO_DRIVER_H_
-#define __DEFAULT_SERVO_DRIVER_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _DEFAULT_SERVO_DRIVER_H_
+#define _DEFAULT_SERVO_DRIVER_H_
 #pragma once
 
 #include "ServoDriver.h"

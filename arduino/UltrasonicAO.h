@@ -1,5 +1,9 @@
-#ifndef __ULTRASONIC_AO_H_
-#define __ULTRASONIC_NO_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _ULTRASONIC_AO_H_
+#define _ULTRASONIC_NO_H_
 
 #include "SelfControl.h"
 #include "ServoDriver.h"

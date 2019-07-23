@@ -1,5 +1,9 @@
-#ifndef __INFRARED_TRACK_H_
-#define __INFRARED_TRACK_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _INFRARED_TRACK_H_
+#define _INFRARED_TRACK_H_
 
 #include "SelfControl.h"
 

@@ -1,5 +1,9 @@
-#ifndef __MOTOR_DRIVER_H_
-#define __MOTOR_DRIVER_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _MOTOR_DRIVER_H_
+#define _MOTOR_DRIVER_H_
 #pragma once
 
 #include "Arduino.h"

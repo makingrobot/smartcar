@@ -1,5 +1,9 @@
-#ifndef __OUTPUT_H_
-#define __OUTPUT_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _OUTPUT_H_
+#define _OUTPUT_H_
 #pragma once
 
 #include "Display.h"

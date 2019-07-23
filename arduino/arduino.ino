@@ -1,3 +1,7 @@
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
 #define USE_SOFTSERIAL
 
 #include "ADC8Selector.h"
@@ -15,51 +19,51 @@
 #include "LcdDisplay.h"
 
 //Control Mode
-#define PS2xCtrlMode          1
-#define BluetoothCtrlMode     2
-#define InfraredCtrlMode      3
-#define UltrasonicAOMode      4
-#define UltrasonicFLMode      5
-#define InfraredTrackMode     6
+#define PS2X_CTRL_MODE          1
+#define BLUETOOTH_CTRL_MODE     2
+#define INFRARED_CTRL_MODE      3
+#define ULTRASONIC_AO_MODE      4
+#define ULTRASONIC_FL_MODE      5
+#define INFRARED_TRACK_MODE     6
 
 //Digital Pin
-#define Infrared_Ctrl_In      2
-#define Servo_Out             3  //PWM
-#define PS2x_Attention        4
-#define Motor_LeftIn1         5  //PWM
-#define Motor_LeftIn2         6  //PWM
-#define Ultrasonic_Echo       7
-#define Ultrasonic_Trig       8
-#define Motor_RightIn1        9  //PWM
-#define Motor_RightIn2        10  //PWM
-#define PS2x_Command          11  //SPI
-#define PS2x_Clock            12  //SPI
-#define PS2x_Data             13  //SPI
+#define INFRARED_CTRL_IN      2
+#define SERVO_OUT             3  //PWM
+#define PS2_ATTENTION         4
+#define MOTOR_LEFT_IN1        5  //PWM
+#define MOTOR_LEFT_IN2        6  //PWM
+#define ULTRASONIC_ECHO       7
+#define ULTRASONIC_TRIG       8
+#define MOTOR_RIGHT_IN1       9  //PWM
+#define MOTOR_RIGHT_IN2       10  //PWM
+#define PS2_COMMAND           11  //SPI
+#define PS2_CLOCK             12  //SPI
+#define PS2_DATA              13  //SPI
 
 //Analog Pin
-#define Infrared_Left         A0
-#define Infrared_Right        A1
-#define ADC8_Selector         A3
-#define TWI_Clock             A4  //TWI
-#define TWI_Data              A5  //TWI
+#define INFRARED_LEFT_IN      A0
+#define INFRARED_RIGHT_IN     A1
+#define ADC8_SELECTOR_IN      A3
+#define TWI_CLOCK             A4  //TWI
+#define TWI_DATA              A5  //TWI
 
 #ifdef USE_SOFTSERIAL
 #include "SoftSerialWrapper.h"
 #include "CustomServoDriver.h"
-ServoDriver *servoDriver = new CustomServoDriver(Servo_Out);
+ServoDriver *servoDriver = new CustomServoDriver(SERVO_OUT);
 SerialWrapper *mySerial = new SoftSerialWrapper(2, 3, 9600);
 #else
 #include "DefaultServoDriver.h"
-ServoDriver *servoDriver = new DefaultServoDriver(Servo_Out);
+ServoDriver *servoDriver = new DefaultServoDriver(SERVO_OUT);
 SerialWrapper *mySerial = new SerialWrapper();
 #endif
 
 Display *display = new Display(); //LcdDisplay(0x0, 20, 4);
 LedController *ledController = new LedController();
 
-MotorDriver motorDriver(Motor_LeftIn1, Motor_LeftIn2, Motor_RightIn1, Motor_RightIn2);
+MotorDriver motorDriver(MOTOR_LEFT_IN1, MOTOR_LEFT_IN2, MOTOR_RIGHT_IN1, MOTOR_RIGHT_IN2);
 Output output(display, ledController);
-ADC8Selector modeSel(ADC8_Selector);
+ADC8Selector modeSel(ADC8_SELECTOR_IN);
 Control *control = NULL;
 
 uint8_t mode = 0;
@@ -87,23 +91,23 @@ void loop() {
     
     switch (newMode)
     {
-      case PS2xCtrlMode:
-        control = new PS2xControl(PS2x_Clock, PS2x_Command, PS2x_Data, PS2x_Attention);
+      case PS2X_CTRL_MODE:
+        control = new PS2xControl(PS2_CLOCK, PS2_COMMAND, PS2_DATA, PS2_ATTENTION);
         break;
-      case BluetoothCtrlMode:
+      case BLUETOOTH_CTRL_MODE:
         control = new BluetoothControl(mySerial);
         break;
-      case InfraredCtrlMode:
-        control = new InfraredControl(Infrared_Ctrl_In);
+      case INFRARED_CTRL_MODE:
+        control = new InfraredControl(INFRARED_CTRL_IN);
         break;
-      case UltrasonicAOMode:
-        control = new UltrasonicAO(Ultrasonic_Echo, Ultrasonic_Trig, servoDriver);
+      case ULTRASONIC_AO_MODE:
+        control = new UltrasonicAO(ULTRASONIC_ECHO, ULTRASONIC_TRIG, servoDriver);
         break;
-      case UltrasonicFLMode:
-        control = new UltrasonicFL(Ultrasonic_Echo, Ultrasonic_Trig, servoDriver);
+      case ULTRASONIC_FL_MODE:
+        control = new UltrasonicFL(ULTRASONIC_ECHO, ULTRASONIC_TRIG, servoDriver);
         break;  
-      case InfraredTrackMode:
-        control = new InfraredTrack(Infrared_Left, Infrared_Right);
+      case INFRARED_TRACK_MODE:
+        control = new InfraredTrack(INFRARED_LEFT_IN, INFRARED_RIGHT_IN);
         break;
     }  
     

@@ -1,5 +1,9 @@
-#ifndef __PS2X_CONTROL_H_
-#define __PS2x_CONTROL_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _PS2X_CONTROL_H_
+#define _PS2x_CONTROL_H_
 
 #include "RemoteControl.h"
 

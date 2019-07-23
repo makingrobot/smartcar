@@ -1,5 +1,9 @@
-#ifndef __DISPLAY_H_
-#define __DISPLAY_H_
+/* SmartCar - makingrobot.net
+ * Copyright MakingRobot 2018
+ * MIT License
+ */
+#ifndef _DISPLAY_H_
+#define _DISPLAY_H_
 #pragma once
 
 #include <Arduino.h>
