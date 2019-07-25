@@ -11,14 +11,14 @@
 class BluetoothControl : public RemoteControl
 {
    public:
-     BluetoothControl(SerialWrapper *serial);
+     BluetoothControl(SerialWrapper &serial);
      ~BluetoothControl();
      
   protected:
     void ReadInput() override;
 
   private:
-    SerialWrapper *mSerial;
+    SerialWrapper &mSerial;
   
 };
 

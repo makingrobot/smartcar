@@ -11,7 +11,7 @@
 class UltrasonicFL : public SelfControl
 {
    public:
-     UltrasonicFL(uint8_t echoPin, uint8_t trigPin, ServoDriver *servoDriver);
+     UltrasonicFL(uint8_t echoPin, uint8_t trigPin, ServoDriver &servoDriver);
      ~UltrasonicFL();
 
     void Execute(MotorDriver driver, Output output) override;
@@ -20,7 +20,7 @@ class UltrasonicFL : public SelfControl
     void LookForward();
     float CheckDistance();  
     
-    ServoDriver *mServoDriver;
+    ServoDriver &mServoDriver;
     uint8_t mTrigPin;
     uint8_t mEchoPin;
 

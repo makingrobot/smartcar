@@ -12,7 +12,7 @@ class Display
 {
   public:
     Display() {};
-    virtual void Show(char* text, uint8_t line) {};
+    virtual void Show(const String &text, uint8_t line) {};
 };
 
 #endif

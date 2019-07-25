@@ -50,16 +50,16 @@
 #ifdef USE_SOFTSERIAL
 #include "SoftSerialWrapper.h"
 #include "CustomServoDriver.h"
-ServoDriver *servoDriver = new CustomServoDriver(SERVO_OUT);
-SerialWrapper *mySerial = new SoftSerialWrapper(2, 3, 9600);
+CustomServoDriver servoDriver(SERVO_OUT);
+SoftSerialWrapper mySerial(2, 3, 9600);
 #else
 #include "DefaultServoDriver.h"
-ServoDriver *servoDriver = new DefaultServoDriver(SERVO_OUT);
-SerialWrapper *mySerial = new SerialWrapper();
+ServoDriver servoDriver(SERVO_OUT);
+SerialWrapper mySerial;
 #endif
 
-Display *display = new Display(); //LcdDisplay(0x0, 20, 4);
-LedController *ledController = new LedController();
+Display display; //LcdDisplay(0x0, 20, 4);
+LedController ledController;
 
 MotorDriver motorDriver(MOTOR_LEFT_IN1, MOTOR_LEFT_IN2, MOTOR_RIGHT_IN1, MOTOR_RIGHT_IN2);
 Output output(display, ledController);

@@ -11,7 +11,7 @@
 #define BackDelay 600//倒退时间
 #define ReboundDelay 150 //反弹时间
 
-UltrasonicFL::UltrasonicFL(uint8_t echoPin, uint8_t trigPin, ServoDriver *servoDriver)
+UltrasonicFL::UltrasonicFL(uint8_t echoPin, uint8_t trigPin, ServoDriver &servoDriver)
 {
   mEchoPin = echoPin;
   mTrigPin = trigPin;
@@ -33,7 +33,7 @@ void UltrasonicFL::Execute(MotorDriver driver, Output output)
 }
 
 void UltrasonicFL::LookForward() {//向前看
-  mServoDriver->Drive(90);
+  mServoDriver.Drive(90);
   delay(LookDelay);
 }
 

@@ -12,7 +12,7 @@
 class Output
 {
   public:
-    Output(Display *display, LedController *ledController);
+    Output(Display &display, LedController &ledController);
     ~Output();
 
     // led
@@ -22,13 +22,13 @@ class Output
     void BlinkRightLed(); // 右转向灯
 
     // screen
-    void Show(char* text, uint8_t line);
+    void Show(const String &text, uint8_t line);
 
     // audio
     
   private:
-    Display *mDisplay;
-    LedController *mLedController;
+    Display &mDisplay;
+    LedController &mLedController;
       
 };
 

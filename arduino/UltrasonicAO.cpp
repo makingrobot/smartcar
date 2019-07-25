@@ -11,7 +11,7 @@
 #define BackDelay 200//倒退时间
 #define ReboundDelay 150 //反弹时间
 
-UltrasonicAO::UltrasonicAO(uint8_t echoPin, uint8_t trigPin, ServoDriver *servoDriver)
+UltrasonicAO::UltrasonicAO(uint8_t echoPin, uint8_t trigPin, ServoDriver &servoDriver)
 {
   mEchoPin = echoPin;
   mTrigPin = trigPin;
@@ -67,12 +67,12 @@ void UltrasonicAO::Execute(MotorDriver driver, Output output)
 
 
 void UltrasonicAO::LookAngle(int angle) {
-  mServoDriver->Drive(angle);
+  mServoDriver.Drive(angle);
   delay(LookDelay);
 }
 
 void UltrasonicAO::LookForward() {//向前看
-  mServoDriver->Drive(90);
+  mServoDriver.Drive(90);
   delay(LookDelay);
 }
 
